@@ -1,0 +1,19 @@
+{
+  "name": "blood-stream",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test test/node.sh"
+  },
+  "keywords": [],
+  "author": "mixmix",
+  "license": "MIT",
+  "dependencies": {
+    "pull-stream": "^3.4.5"
+  },
+  "devDependencies": {
+    "tap-diff": "^0.1.1",
+    "tape": "^4.6.2"
+  }
+}
