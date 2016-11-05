@@ -1,0 +1,52 @@
+const pull = require('pull-stream')
+const pacemaker = require('./pacemaker')
+const marrow = require('./marrow')
+const pancreas = require('./pancreas')
+const adipose = require('./adipose')
+const sample = require('./sample')
+
+const INITIAL_STATE = {
+  sugar: 10,
+  glucagon: 0
+}
+
+function Heart () {
+  var atrium = INITIAL_STATE 
+
+  const source = (abort, callback) => {
+    if (abort) return callback(abort)
+
+    const blood = atrium  // draw blood from the atrium
+    atrium = null         // 
+    callback(null, blood) // pump the blood
+  }
+
+  const sink = (source) => {
+    const readMore = (err, blood) => {
+      if (err) return console.log('DONE', err)
+
+      atrium = blood     // pass the blood into the atrium
+      source(null, readMore)
+    }
+
+    source(null, readMore)
+  }
+
+  return {
+    source,
+    sink
+  }
+}
+
+const heart = Heart()
+
+pull(
+  heart.source,
+  pacemaker(700),
+  marrow,
+  pancreas,
+  adipose,
+  sample,
+  heart.sink
+)
+
