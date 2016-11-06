@@ -4,7 +4,8 @@ module.exports = Organ
 
 // reducer({ blood, state }) -> { blood, state }
 // input({ action, state }) -> state
-function Organ ({ initialState = {}, reducer, input }) {
+function Organ ({ name, initialState = {}, reducer, monitor }) {
+  assert(typeof name === 'string', 'Organ: must have a string name')
   assert(typeof initialState === 'object', 'Organ: must have an initial state (object)')
   assert(typeof reducer === 'function', 'Organ: must have a reducer')
 
@@ -19,14 +20,12 @@ function Organ ({ initialState = {}, reducer, input }) {
 
         const { blood: newBlood, state: newState } = reducer({ blood, state })
         state = newState
+        if (monitor) monitor({ name, state })
+
         callback(null, newBlood)
       })
     }
 
-    organ.getState = () => state
-    if (typeof input === 'function') {
-      organ.input = (action) => state = input({ action, state })
-    }
     return organ
   }
 }

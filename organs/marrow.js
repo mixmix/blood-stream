@@ -3,6 +3,7 @@ const extend = require('xtend')
 const Organ = require('./index')
 
 const marrow = Organ({
+  name: 'marrow',
   initialState: { sugar: 100 },
   reducer: ({ blood, state }) => {
     return {

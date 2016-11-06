@@ -3,6 +3,7 @@ const extend = require('xtend')
 const Organ = require('./index')
 
 const pancreas = Organ({
+  name: 'pancreas',
   reducer: ({ blood, state }) => {
     if (blood.sugar > 5) return { blood, state }
 

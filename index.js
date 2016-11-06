@@ -3,7 +3,7 @@ const pacemaker = require('./organs/pacemaker')
 const marrow = require('./organs/marrow')
 const pancreas = require('./organs/pancreas')
 const adipose = require('./organs/adipose')
-const sample = require('./sample')
+const bloodSampler = require('./bloodSampler')
 
 const INITIAL_STATE = {
   sugar: 10,
@@ -46,7 +46,7 @@ pull(
   marrow,
   pancreas,
   adipose,
-  sample,
+  bloodSampler,
   heart.sink
 )
 
