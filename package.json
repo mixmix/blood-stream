@@ -4,16 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test test/node.sh"
+    "start": "node index.js",
+    "test": "npm run test:js && npm run test:lint",
+    "test:js": "NODE_ENV=test test/node.sh",
+    "test:lint": "standard"
   },
   "keywords": [],
   "author": "mixmix",
   "license": "MIT",
   "dependencies": {
+    "assert": "^1.4.1",
+    "get-in": "^3.0.1",
     "pull-stream": "^3.4.5",
     "xtend": "^4.0.1"
   },
   "devDependencies": {
+    "standard": "^8.5.0",
     "tap-diff": "^0.1.1",
     "tape": "^4.6.2"
   }

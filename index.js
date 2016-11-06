@@ -1,7 +1,7 @@
 const pull = require('pull-stream')
-const pacemaker = require('./pacemaker')
-const marrow = require('./marrow')
-const pancreas = require('./pancreas')
+const pacemaker = require('./organs/pacemaker')
+const marrow = require('./organs/marrow')
+const pancreas = require('./organs/pancreas')
 const adipose = require('./organs/adipose')
 const sample = require('./sample')
 
