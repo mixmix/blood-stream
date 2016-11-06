@@ -1,5 +1,5 @@
 const assert = require('assert')
-  
+
 module.exports = Organ
 
 // reducer({ blood, state }) -> { blood, state }

@@ -8,7 +8,7 @@ const adipose = Organ({
   reducer: ({ blood, state }) => {
     if (blood.glucagon === 0 || blood.glucagon === undefined) return { blood, state }
 
-    const sugarReleased = blood.glucagon*0.8
+    const sugarReleased = blood.glucagon * 0.8
 
     return {
       state: extend(state, { sugar: state.sugar - sugarReleased }),
@@ -20,6 +20,3 @@ const adipose = Organ({
 
 module.exports = adipose
 
-function round(num) {
-  return Math.round(num*100)/100
-}

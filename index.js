@@ -11,13 +11,13 @@ const INITIAL_STATE = {
 }
 
 function Heart () {
-  var atrium = INITIAL_STATE 
+  var atrium = INITIAL_STATE
 
   const source = (abort, callback) => {
     if (abort) return callback(abort)
 
     const blood = atrium  // draw blood from the atrium
-    atrium = null         // 
+    atrium = null         //
     callback(null, blood) // pump the blood
   }
 

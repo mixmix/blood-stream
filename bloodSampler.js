@@ -5,7 +5,7 @@ const monitor = require('./monitor')
 module.exports = Organ({
   name: 'blood',
   reducer: ({ blood, state }) => {
-    state = extend(blood) 
+    state = extend(blood)
     return { blood, state }
   },
   monitor
