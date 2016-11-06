@@ -2,7 +2,7 @@ const pull = require('pull-stream')
 const pacemaker = require('./pacemaker')
 const marrow = require('./marrow')
 const pancreas = require('./pancreas')
-const adipose = require('./adipose')
+const adipose = require('./organs/adipose')
 const sample = require('./sample')
 
 const INITIAL_STATE = {
@@ -42,7 +42,7 @@ const heart = Heart()
 
 pull(
   heart.source,
-  pacemaker(700),
+  pacemaker(300),
   marrow,
   pancreas,
   adipose,
