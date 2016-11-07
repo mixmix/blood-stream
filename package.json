@@ -8,9 +8,9 @@
     "test": "npm run test:js && npm run test:lint",
     "test:js": "NODE_ENV=test test/node.sh",
     "test:lint": "standard",
-    "build": "browserify client.js -g uglifyify -o dist/bundle.js",
-    "watch": "watchify client.js -o dist/bundle.js -dv",
-    "deploy": "gh-pages -d dist"
+    "build": "browserify client.js -g uglifyify -o public/bundle.js",
+    "watch": "watchify client.js -o public /bundle.js -dv",
+    "deploy": "gh-pages -d public"
   },
   "browserify": {
     "transform": [
