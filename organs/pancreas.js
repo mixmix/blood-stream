@@ -1,20 +1,29 @@
-const getIn = require('get-in')
 const extend = require('xtend')
 const Organ = require('./index')
 
-const Pancreas = () => Organ({
+module.exports = () => Organ({
   name: 'pancreas',
   reducer: ({ blood, state }) => {
-    if (blood.sugar > 5) return { blood, state }
-
-    const glucagon = getIn(blood, ['glucagon'], 0) + 1
-
+    const { sugar, glucagon, insulin } = blood
     return {
-      state,
-      blood: extend(blood, { glucagon })
+      blood: extend(blood, { 
+        glucagon: glucagon + glucagonResponse(sugar),
+        insulin: insulin + insulinResponse(sugar)
+      }),
+      state
     }
   }
 })
 
-module.exports = Pancreas
+function glucagonResponse(sugar) {
+  if (sugar > 5) return 0
+
+  return 0.5 * (5 - sugar)  // release proportional to difference from minimum
+}
+
+function insulinResponse(sugar) {
+  if (sugar < 10) return 0
+
+  return 0.5 * (sugar - 10)  // release proportional to difference from minimum
+}
 
