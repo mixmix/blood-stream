@@ -1,8 +1,7 @@
 const extend = require('xtend')
 const Organ = require('./organs/index')
-const monitor = require('./monitor')
 
-module.exports = Organ({
+module.exports = ({ monitor }) => Organ({
   name: 'blood',
   reducer: ({ blood, state }) => {
     state = extend(blood)

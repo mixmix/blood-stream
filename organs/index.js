@@ -13,14 +13,14 @@ function Organ ({ name, initialState = {}, reducer, monitor }) {
     var state = initialState
 
     function organ (abort, callback) {
-      if (abort) return callback(abort)
+      if (abort) return monitor({ abort }) && callback(abort)
 
       source(null, (err, blood) => {
         if (err) return callback(err)
 
         const { blood: newBlood, state: newState } = reducer({ blood, state })
         state = newState
-        if (monitor) monitor({ name, state })
+        if (monitor) monitor({ name, state, abort })
 
         callback(null, newBlood)
       })

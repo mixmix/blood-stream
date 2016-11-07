@@ -1,10 +1,11 @@
 const pull = require('pull-stream')
 const Heart = require('./organs/heart')
-const pacemaker = require('./organs/pacemaker')
-const marrow = require('./organs/marrow')
-const pancreas = require('./organs/pancreas')
-const adipose = require('./organs/adipose')
-const bloodSampler = require('./bloodSampler')
+const Pacemaker = require('./organs/pacemaker')
+const Marrow = require('./organs/marrow')
+const Pancreas = require('./organs/pancreas')
+const Adipose = require('./organs/adipose')
+const BloodSampler = require('./bloodSampler')
+const monitor = require('./sparkMonitor')
 
 const initialState = {
   sugar: 10,
@@ -15,11 +16,11 @@ const heart = Heart({ initialState })
 
 pull(
   heart.source,
-  pacemaker(300),
-  marrow,
-  pancreas,
-  adipose,
-  bloodSampler,
+  Pacemaker(200),
+  Marrow(),
+  Pancreas(),
+  Adipose({ monitor }),
+  BloodSampler({ monitor }),
   heart.sink
 )
 
