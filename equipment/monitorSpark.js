@@ -60,7 +60,7 @@ function format (text, width = 12) {
 }
 
 function graph (values) {
-  const length = 40
+  const length = 100
   values = values.slice(0, length)
 
   while (values.length < length) {
