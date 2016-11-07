@@ -8,7 +8,7 @@ const RELEASE_RATE = 3
 function FoodTube ({ initialState = { sugar: 0 } }) {
   assert(typeof initialState === 'object', 'FoodTube: must have an initial state (object)')
   var state = initialState
-  
+
   function input ({ inputSugar }) {
     state = extend(state, { sugar: state.sugar + inputSugar })
   }
@@ -31,7 +31,7 @@ function FoodTube ({ initialState = { sugar: 0 } }) {
 
   return {
     input,
-    organ 
+    organ
   }
 
   // modified Organ prototype which extracts the raises the state up a level

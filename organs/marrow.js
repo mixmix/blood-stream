@@ -1,7 +1,7 @@
 const extend = require('xtend')
 const Organ = require('./index')
 
-SUGAR_CONSUMPTION = 0.9
+const SUGAR_CONSUMPTION = 0.9
 
 module.exports = () => Organ({
   name: 'marrow',

@@ -15,11 +15,11 @@ module.exports = ({ monitor } = {}) => Organ({
       ? state.sugar
       : blood.glucagon * RELEASE_RATE
 
-    const sugarStored =  blood.insulin * STORAGE_RATE
+    const sugarStored = blood.insulin * STORAGE_RATE
 
     return {
-      blood: extend(blood, { sugar: blood.sugar + sugarReleased - sugarStored}),
-      state: extend(state, { sugar: state.sugar - sugarReleased + sugarStored})
+      blood: extend(blood, { sugar: blood.sugar + sugarReleased - sugarStored }),
+      state: extend(state, { sugar: state.sugar - sugarReleased + sugarStored })
     }
   },
   monitor

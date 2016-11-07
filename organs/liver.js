@@ -10,7 +10,7 @@ module.exports = ({ monitor }) => Organ({
   reducer: ({ blood, state }) => {
     const { glucagon, insulin } = blood
     return {
-      blood: extend(blood, { 
+      blood: extend(blood, {
         glucagon: glucagon * PEPTIDE_DECAY_PROPORTION,
         insulin: insulin * PEPTIDE_DECAY_PROPORTION
       }),

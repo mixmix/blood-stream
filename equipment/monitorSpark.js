@@ -18,13 +18,13 @@ function Monitor () {
 
     history[name] = history[name] || {}
 
-    for (attr in state) {
-      attrState = history[name][attr] || {}
-      attrState.values =  attrState.values || []
+    for (var attr in state) {
+      var attrState = history[name][attr] || {}
+      attrState.values = attrState.values || []
       attrState.values.unshift(state[attr])
 
       if (attrState.view === undefined) {
-        var box = blessed.box({ top: `${ attrCount++ * 5 + 10}%` })
+        var box = blessed.box({ top: `${attrCount++ * 5 + 10}%` })
         attrState.view = box
         screen.append(box)
       }
@@ -40,16 +40,14 @@ function Monitor () {
       history[name][attr] = attrState
       screen.render()
     }
-   
   }
 }
 
-function format(text, width = 12) {
+function format (text, width = 12) {
   return fw(text, width, {align: 'right'})
 }
 
-
-function graph(values) {
+function graph (values) {
   const length = 40
   values = values.slice(0, length)
 
