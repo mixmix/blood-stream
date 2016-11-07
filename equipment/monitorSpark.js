@@ -3,14 +3,26 @@ const blessed = require('blessed')
 const spark = require('sparkly')
 const fw = require('fixed-width-string')
 
-module.exports = Monitor()
+module.exports = Monitor
 
-function Monitor () {
+function Monitor ({ mouth }) {
   var history = {}
   var attrCount = 0
   var screen = blessed.screen({
     smartCSR: true
   })
+
+  // drop some sugar in the food-pipe
+  screen.key(
+    [1, 2, 3, 4, 5, 6, 7, 8, 9].map(String), 
+    (ch, key) => {
+      mouth({ inputSugar: ch*10 })
+    }
+  )
+   
+  // Quit on Escape, q, or Control-C. 
+  screen.key(['escape', 'q', 'C-c'], () => process.exit(0))
+
 
   return ({ name, state }) => {
     assert(typeof name === 'string', 'Monitor: must have a string name')

@@ -9,7 +9,7 @@ const Adipose = require('./organs/adipose')
 const FoodTube = require('./organs/foodTube')
 
 const BloodSampler = require('./equipment/bloodSampler')
-const monitor = require('./equipment/monitorSpark')
+const Monitor = require('./equipment/monitorSpark')
 
 const initialState = {
   sugar: 10,
@@ -20,6 +20,7 @@ const heart = Heart({ initialState })
 
 const foodTube = FoodTube({})
 const mouth = foodTube.input
+const monitor = Monitor({ mouth })
 
 pull(
   heart.source,
@@ -31,10 +32,5 @@ pull(
   Adipose({ monitor }),
   BloodSampler({ monitor }),
   heart.sink
-)
-
-setTimeout(
-  () => { mouth({ inputSugar: 40 }) },
-  3e3
 )
 
