@@ -1,7 +1,7 @@
 const extend = require('xtend')
 const Organ = require('./index')
 
-const marrow = () => Organ({
+const Marrow = () => Organ({
   name: 'marrow',
   initialState: { sugar: 100 },
   reducer: ({ blood, state }) => {
@@ -12,5 +12,5 @@ const marrow = () => Organ({
   }
 })
 
-module.exports = marrow
+module.exports = Marrow
 

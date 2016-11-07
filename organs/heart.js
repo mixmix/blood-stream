@@ -1,7 +1,9 @@
+const assert = require('assert')
 
 module.exports = Heart
 
 function Heart ({ initialState }) {
+  assert(typeof initialState === 'object', 'Heart: must have an initial state (object)')
   var atrium = initialState
 
   const source = (abort, callback) => {
