@@ -1,6 +1,6 @@
 const assert = require('assert')
 const spark = require('sparkly')
-const fw = require('fixed-width-string')
+const getIn = require('get-in')
 
 module.exports = Monitor
 
@@ -24,12 +24,11 @@ function Monitor ({ mouth, callback }) {
     assert(typeof name === 'string', 'Monitor: must have a string name')
     assert(typeof state === 'object', 'Monitor: must have a state (object)')
 
-    history[name] = history[name] || {}
+    history[name] = getIn(history, [name], {})
 
     for (var attr in state) {
-      var attrState = history[name][attr] || {}
-      attrState.values = attrState.values || []
-      attrState.values.unshift(state[attr])
+      var attrState = getIn(history, [name, attr], [])
+      attrState.unshift(state[attr])
 
       history[name][attr] = attrState
     }
@@ -39,10 +38,3 @@ function Monitor ({ mouth, callback }) {
   }
 }
 
-function format (text, width = 12) {
-  return fw(text, width, {align: 'right'})
-}
-
-function round (num) {
-  return Math.round(num * 100) / 100
-}

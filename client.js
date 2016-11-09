@@ -1,17 +1,17 @@
 const pull = require('pull-stream')
 const html = require('yo-yo')
-const spark = require('sparkly')
 
 const Heart = require('./organs/heart')
 const Pacemaker = require('./organs/pacemaker')
-const Marrow = require('./organs/marrow')
-const Pancreas = require('./organs/pancreas')
-const Liver = require('./organs/liver')
+const marrow = require('./organs/marrow')()
+const pancreas = require('./organs/pancreas')()
+const liver = require('./organs/liver')({})
 const Adipose = require('./organs/adipose')
 const FoodTube = require('./organs/foodTube')
 
 const BloodSampler = require('./equipment/bloodSampler')
 const Monitor = require('./equipment/monitorYoyo')
+const View = require('./view')
 
 const initialState = {
   sugar: 10,
@@ -20,53 +20,33 @@ const initialState = {
 }
 const heart = Heart({ initialState })
 
-const foodTube = FoodTube({})
-const mouth = foodTube.input
-const monitor = Monitor({ mouth, callback: update })
+const { organ: intestine, input: mouth } = FoodTube({})
+
+var view = View()
+document.getElementById('main').appendChild(view)
+
+const monitor = Monitor({
+  input: mouth,
+  callback: (err, history) => {
+    if (err) throw err
+    if (history.blood === undefined) return
+
+    html.update(view, View(history))
+  }
+})
 
 pull(
   heart.source,
-  Pacemaker(50),
-  foodTube.organ({ monitor }),
-  Marrow(),
-  Pancreas(),
-  Liver({}),
+  Pacemaker(200),
+  intestine({ monitor }),
+  marrow,
+  pancreas,
+  liver,
   Adipose({ monitor }),
   BloodSampler({ monitor }),
   heart.sink
 )
 
-const view = (history) => {
-  if (history === undefined) return html`<div>Loading...</div>`
 
-  return html`
-    <div>
-      blood-sugar: 
-      ${history.blood.sugar[0]}    
-      ${graph(history.blood.sugar.values)}
-    </div>
-  `
-}
-
-function graph (values) {
-  const length = 100
-  values = values.slice(0, length)
-
-  while (values.length < length) {
-    values.push('')
-  }
-
-  return spark(values)
-}
-
-var el = view()
-document.getElementById('main').appendChild(el)
-
-function update (err, history) {
-  if (err) throw err
-  if (history.blood === undefined) return
-
-  html.update(el, view(history))
-}
 
 

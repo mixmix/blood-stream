@@ -2,14 +2,14 @@
   "name": "blood-stream",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "client.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node clientTerminal.js",
     "test": "npm run test:js && npm run test:lint",
     "test:js": "NODE_ENV=test test/node.sh",
     "test:lint": "standard",
     "build": "browserify client.js -g uglifyify -o public/bundle.js",
-    "watch": "watchify client.js -o public /bundle.js -dv",
+    "watch": "watchify client.js -o public/bundle.js -dv",
     "deploy": "gh-pages -d public"
   },
   "browserify": {
@@ -28,6 +28,7 @@
     "fixed-width-string": "^1.0.0",
     "get-in": "^3.0.1",
     "pull-stream": "^3.4.5",
+    "reselect": "^2.5.4",
     "sparkly": "^3.1.2",
     "xtend": "^4.0.1",
     "yo-yo": "^1.3.1"

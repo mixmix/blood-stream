@@ -24,7 +24,7 @@ const monitor = Monitor({ mouth })
 
 pull(
   heart.source,
-  Pacemaker(50),
+  Pacemaker(100),
   foodTube.organ({ monitor }),
   Marrow(),
   Pancreas(),

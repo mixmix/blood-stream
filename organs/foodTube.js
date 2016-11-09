@@ -14,7 +14,7 @@ function FoodTube ({ initialState = { sugar: 0 } }) {
   }
 
   const organ = ({monitor}) => Organ({
-    name: 'foodTube',
+    name: 'intestine',
     reducer: ({ blood, state }) => {
       if (blood.glucagon === 0 || blood.glucagon === undefined) return { blood, state }
       if (state.sugar <= 0) return { blood, state }
