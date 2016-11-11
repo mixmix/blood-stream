@@ -1,7 +1,6 @@
 const assert = require('assert')
-const spark = require('sparkly')
 const getIn = require('get-in')
-const extend = require('xtend')
+// const extend = require('xtend')
 const clone = require('clone') // TODO check perf
 
 module.exports = Monitor
@@ -22,7 +21,7 @@ function Monitor ({ subscribe }) {
 
       newHistory[location][attr] = attrState
     }
-    //TODO tidy ^
+    // TODO tidy ^
     subscribe(null, newHistory) // need to return new obj because of memoization
     history = newHistory
   }

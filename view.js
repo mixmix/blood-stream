@@ -30,7 +30,7 @@ function view ({ history, mouth }) {
       <a 
         class='f6 link dim br2 ba ph3 pv2 mb2 ma4 dib dark-red' 
         href='#'
-        onclick=${() => mouth({ inputSugar: 50 }) }
+        onclick=${() => mouth({ inputSugar: 50 })}
       >
         FEED
       </a>
@@ -65,7 +65,7 @@ const getViewState = Struct({
   bloodInsulin: getLocationAttribute('blood', 'insulin'),
   bloodGlucagon: getLocationAttribute('blood', 'glucagon'),
   adipose: getLocationAttribute('adipose', 'sugar'),
-  intestine: getLocationAttribute('intestine', 'sugar'),
+  intestine: getLocationAttribute('intestine', 'sugar')
 })
 
 function getLocationAttribute (location, attribute) {
@@ -79,7 +79,7 @@ function getLocationAttribute (location, attribute) {
   )
 }
 function getRawLocation (location) {
-  return (history) =>  getIn(history, [location], [])
+  return (history) => getIn(history, [location], [])
 }
 
 function round (num) {
