@@ -1,40 +1,30 @@
 const assert = require('assert')
 const spark = require('sparkly')
 const getIn = require('get-in')
+const extend = require('xtend')
+const clone = require('clone') // TODO check perf
 
 module.exports = Monitor
 
-function Monitor ({ mouth, callback }) {
+function Monitor ({ subscribe }) {
   var history = {}
 
-  //TODO onclick
-  // drop some sugar in the food-pipe
-  //screen.key(
-    //[1, 2, 3, 4, 5, 6, 7, 8, 9].map(String), 
-    //(ch, key) => {
-      //mouth({ inputSugar: ch*10 })
-    //}
-  //)
-   
-  //TODO onclick
-  // Quit on Escape, q, or Control-C. 
-  //screen.key(['escape', 'q', 'C-c'], () => process.exit(0))
-
-  return ({ name, state }) => {
-    assert(typeof name === 'string', 'Monitor: must have a string name')
+  return ({ name: location, state }) => {
+    assert(typeof location === 'string', 'Monitor: must have a string location')
     assert(typeof state === 'object', 'Monitor: must have a state (object)')
 
-    history[name] = getIn(history, [name], {})
+    var newHistory = clone(history)
+    newHistory[location] = getIn(newHistory, [location], {})
 
     for (var attr in state) {
-      var attrState = getIn(history, [name, attr], [])
+      var attrState = getIn(newHistory, [location, attr], [])
       attrState.unshift(state[attr])
 
-      history[name][attr] = attrState
+      newHistory[location][attr] = attrState
     }
-    //TODO
-    // update
-    callback(null, history)
+    //TODO tidy ^
+    subscribe(null, newHistory) // need to return new obj because of memoization
+    history = newHistory
   }
 }
 

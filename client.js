@@ -26,8 +26,7 @@ var view = View()
 document.getElementById('main').appendChild(view)
 
 const monitor = Monitor({
-  input: mouth,
-  callback: (err, history) => {
+  subscribe: (err, history) => {
     if (err) throw err
     if (history.blood === undefined) return
 

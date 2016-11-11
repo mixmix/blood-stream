@@ -20,30 +20,30 @@ function view (history) {
     <div>
       <div class='blood'>
         <div>
-          blood-insulin: 
-          ${bloodInsulin.now}    
+          <span class='w-10'>blood-insulin:</span>
+          <span class='w-10'>${bloodInsulin.now}</span>
           ${graph(bloodInsulin.values)}
         </div>
         <div>
-          blood-glucagon: 
-          ${bloodGlucagon.now}    
+          <span class='w-10'>blood-glucagon:</span>
+          <span class='w-20'>${bloodGlucagon.now}</span>
           ${graph(bloodGlucagon.values)}
         </div>
         <div>
-          blood-sugar: 
-          ${bloodSugar.now}    
+          <span class='w-10'>blood-sugar:</span>
+          <span class='w-20'>${bloodSugar.now}</span>    
           ${graph(bloodSugar.values)}
         </div>
       </div>
       <div class='organs'>
         <div>
-          intestine (sugar income): 
-          ${intestine.now}    
+          <span class='w-10'>intestine (sugar income): 
+          <span class='w-20'>${intestine.now}</span>   
           ${graph(intestine.values)}
         </div>
         <div>
-          fat (sugar stores): 
-          ${adipose.now}    
+          <span class='w-10'>fat (sugar stores):</span>
+          <span class='w-20'>${adipose.now}</span>
           ${graph(adipose.values)}
         </div>
       </div>
@@ -65,19 +65,14 @@ const sampleLength = 40
 function getLocationAttribute (location, attribute) {
   return Getter(
     getRawLocation(location),
-    (data) => {
-      console.log(location, attribute,  data[attribute])
-      return {
-        now: getIn(data, [attribute, 0], emptyState),
-        values: getIn(data, [attribute], []).slice(0, sampleLength)
-      }
-    }
+    (data) => ({
+      now: round(getIn(data, [attribute, 0], emptyState)),
+      values: getIn(data, [attribute], []).slice(0, sampleLength)
+    })
   )
 }
 function getRawLocation (location) {
-  return (history) => {
-    return getIn(history, [location], [])
-  }
+  return (history) =>  getIn(history, [location], [])
 }
     
 function graph (values) {
@@ -89,5 +84,7 @@ function graph (values) {
 }
 
 function round (num) {
+  if (num === emptyState) return num
+
   return Math.round(num * 100) / 100
 }
