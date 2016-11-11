@@ -22,7 +22,7 @@ const heart = Heart({ initialState })
 
 const { organ: intestine, input: mouth } = FoodTube({})
 
-var view = View()
+var view = View({})
 document.getElementById('main').appendChild(view)
 
 const monitor = Monitor({
@@ -30,13 +30,13 @@ const monitor = Monitor({
     if (err) throw err
     if (history.blood === undefined) return
 
-    html.update(view, View(history))
+    html.update(view, View({ history, mouth }))
   }
 })
 
 pull(
   heart.source,
-  Pacemaker(200),
+  Pacemaker(150),
   intestine({ monitor }),
   marrow,
   pancreas,
