@@ -18,37 +18,38 @@ function view (history) {
 
   return html`
     <div>
-      <div class='blood'>
-        <div>
-          <span class='w-10'>blood-insulin:</span>
-          <span class='w-10'>${bloodInsulin.now}</span>
-          ${graph(bloodInsulin.values)}
-        </div>
-        <div>
-          <span class='w-10'>blood-glucagon:</span>
-          <span class='w-20'>${bloodGlucagon.now}</span>
-          ${graph(bloodGlucagon.values)}
-        </div>
-        <div>
-          <span class='w-10'>blood-sugar:</span>
-          <span class='w-20'>${bloodSugar.now}</span>    
-          ${graph(bloodSugar.values)}
-        </div>
+      <div class='ma4 b--dashed-l ba'>
+        ${graphDisplay(bloodInsulin)}
+        ${graphDisplay(bloodGlucagon)}
+        ${graphDisplay(bloodSugar)}
       </div>
-      <div class='organs'>
-        <div>
-          <span class='w-10'>intestine (sugar income): 
-          <span class='w-20'>${intestine.now}</span>   
-          ${graph(intestine.values)}
-        </div>
-        <div>
-          <span class='w-10'>fat (sugar stores):</span>
-          <span class='w-20'>${adipose.now}</span>
-          ${graph(adipose.values)}
-        </div>
+      <div class='ma4'>
+        ${graphDisplay(adipose)}
+        ${graphDisplay(intestine)}
       </div>
     </div>
   `
+}
+
+function graphDisplay (thing) {
+  return html`
+    <div class='pt3 pb4 ph3 flex'>
+      <div class='w4 pr2 self-end'>${thing.title}</div>
+      <div class='w3 self-end'>${thing.now}</div>
+      <div class='f2'>${graph(thing.values)}</div>
+    </div>
+  `
+}
+
+const emptyState = ''
+const sampleLength = 40
+
+function graph (values) {
+  while (values.length < sampleLength) {
+    values.push(emptyState)
+  }
+
+  return spark(values)
 }
 
 const getViewState = Struct({
@@ -59,13 +60,11 @@ const getViewState = Struct({
   intestine: getLocationAttribute('intestine', 'sugar'),
 })
 
-const emptyState = ''
-const sampleLength = 40
-
 function getLocationAttribute (location, attribute) {
   return Getter(
     getRawLocation(location),
     (data) => ({
+      title: `${location} ${attribute}`,
       now: round(getIn(data, [attribute, 0], emptyState)),
       values: getIn(data, [attribute], []).slice(0, sampleLength)
     })
@@ -73,14 +72,6 @@ function getLocationAttribute (location, attribute) {
 }
 function getRawLocation (location) {
   return (history) =>  getIn(history, [location], [])
-}
-    
-function graph (values) {
-  while (values.length < sampleLength) {
-    values.push(emptyState)
-  }
-
-  return spark(values)
 }
 
 function round (num) {
