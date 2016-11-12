@@ -11,7 +11,7 @@ const FoodTube = require('./organs/foodTube')
 
 const BloodSampler = require('./equipment/bloodSampler')
 const Monitor = require('./equipment/monitorYoyo')
-const View = require('./view')
+const View = require('./views/index')
 
 const initialState = {
   sugar: 10,
