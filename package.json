@@ -27,7 +27,6 @@
     "blessed": "^0.1.81",
     "browserify": "^13.1.1",
     "clone": "^2.0.0",
-    "crypto": "0.0.3",
     "es2040": "^1.2.4",
     "fixed-width-string": "^1.0.0",
     "get-in": "^3.0.1",

@@ -36,7 +36,7 @@ const monitor = Monitor({
 
 pull(
   heart.source,
-  Pacemaker(150),
+  Pacemaker(100),
   intestine({ monitor }),
   marrow,
   pancreas,

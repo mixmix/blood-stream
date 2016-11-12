@@ -2,7 +2,6 @@ const html = require('yo-yo')
 const spark = require('sparkline-canvas')
 const { createSelector: Getter, createStructuredSelector: Struct } = require('reselect')
 const getIn = require('get-in')
-const crypto = require('crypto')
 
 module.exports = view
 
@@ -41,11 +40,13 @@ function view ({ history, mouth }) {
 }
 
 function graphDisplay (thing) {
+  const { now, location, attribute } = thing
+
   return html`
     <div class='pt3 pb4 ph3 flex'>
-      <div class='f2'>${graph(thing.values)}</div>
-      <div class='w3 ph3 self-end'>${thing.now}</div>
-      <div class='w4 ph3 self-end'>${thing.title}</div>
+      <div class='f2'>${graph(thing)}</div>
+      <div class='w3 ph3 self-end'>${now}</div>
+      <div class='w4 ph3 self-end'>${location} ${attribute}</div>
     </div>
   `
 }
@@ -53,7 +54,8 @@ function graphDisplay (thing) {
 const sampleLength = 200
 const emptyState = 0
 
-function graph (values) {
+function graph (thing) {
+  let { values } = thing
   while (values.length < sampleLength) {
     values.unshift(emptyState)
   }
@@ -61,17 +63,13 @@ function graph (values) {
   const graphOpts = {
     width: 400,
     height: 50,
-    id: customId(values)
+    id: customId(thing)
   }
   return spark.draw(values, graphOpts)
 }
 
-function customId (values) {
-  const prefix = '_' + crypto.createHash('md5')
-    .update(values.join(''))
-    .digest('hex')
-    .slice(0, 10)
-  return prefix
+function customId ({ location, attribute, timeStep }) {
+  return [location, attribute, timeStep].join('-')
 }
 
 const getViewState = Struct({
@@ -89,9 +87,11 @@ function getLocationAttribute (location, attribute) {
       const values = getIn(data, [attribute], [])
      
       return {
-        title: `${location} ${attribute}`,
+        location,
+        attribute,
         now: round(values[values.length -1] || 0),
-        values: values.slice(values.length - sampleLength)
+        values: values.slice(values.length - sampleLength),
+        timeStep: values.length
       }
     }
   )
