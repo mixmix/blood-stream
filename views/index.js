@@ -10,31 +10,34 @@ function view ({ history, mouth }) {
 
   const {
     bloodSugar,
-    bloodInsulin,
     bloodGlucagon,
-    adipose,
-    intestine
+    bloodInsulin,
+    intestine,
+    uterus,
+    adipose
   } = getViewState(history)
 
   return html`
     <div>
+      <div class='ma4 dark-gray'>
+        <div>
+          ${graphElement(intestine)}
+          <a 
+            class='f6 link dib br2 ba ph3 pv2 mb2 ma4 dib dark-red' 
+            href='#'
+            onclick=${() => mouth({ inputSugar: 600 })}
+          >
+            FEED
+          </a>
+        </div>
+        ${graphElement(adipose)}
+        ${graphElement(uterus)}
+      </div>
       <div class='ma4 b--dashed-l ba dark-red'>
+        ${graphElement(bloodSugar)}
         ${graphElement(bloodInsulin)}
         ${graphElement(bloodGlucagon)}
-        ${graphElement(bloodSugar)}
       </div>
-      <div class='ma4 dark-gray'>
-        ${graphElement(adipose)}
-        ${graphElement(intestine)}
-      </div>
-      <a 
-        class='f6 link dim br2 ba ph3 pv2 mb2 ma4 dib dark-red' 
-        href='#'
-        onclick=${() => mouth({ inputSugar: 50 })}
-      >
-        FEED
-      </a>
-
     </div>
   `
 }

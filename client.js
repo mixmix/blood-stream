@@ -4,6 +4,7 @@ const html = require('yo-yo')
 const Heart = require('./organs/heart')
 const Pacemaker = require('./organs/pacemaker')
 const marrow = require('./organs/marrow')()
+const Uterus = require('./organs/uterus')
 const pancreas = require('./organs/pancreas')()
 const liver = require('./organs/liver')({})
 const Adipose = require('./organs/adipose')
@@ -39,6 +40,7 @@ pull(
   Pacemaker(100),
   intestine({ monitor }),
   marrow,
+  Uterus({ monitor }),
   pancreas,
   liver,
   Adipose({ monitor }),

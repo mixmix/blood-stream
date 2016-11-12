@@ -1,12 +1,11 @@
 const extend = require('xtend')
 const Organ = require('./index')
 
-const SUGAR_CONSUMPTION = 0.9
+const SUGAR_CONSUMPTION = 5
 
 module.exports = () => Organ({
   name: 'marrow',
-  initialState: { sugar: 100 },
-  reducer: ({ blood, state }) => {
+  reducer: ({ state, blood }) => {
     return {
       blood: extend(blood, { sugar: blood.sugar - SUGAR_CONSUMPTION }),
       state

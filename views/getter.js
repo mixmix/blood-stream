@@ -8,6 +8,7 @@ const getViewState = Struct({
   bloodInsulin: getLocationAttribute('blood', 'insulin'),
   bloodGlucagon: getLocationAttribute('blood', 'glucagon'),
   adipose: getLocationAttribute('adipose', 'sugar'),
+  uterus: getLocationAttribute('uterus', 'sugar'),
   intestine: getLocationAttribute('intestine', 'sugar')
 })
 
@@ -35,7 +36,7 @@ function getRawLocation (location) {
 function round (num) {
   if (num === emptyState) return num
 
-  return Math.round(num * 100) / 100
+  return Math.round(num * 1e1) / 1e1
 }
 
 module.exports = getViewState

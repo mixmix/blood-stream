@@ -9,7 +9,7 @@ function graphElement (thing) {
   const { now, location, attribute } = thing
 
   return html`
-    <div class='pt3 pb4 ph3 flex'>
+    <div class='pt3 pb4 ph3 flex mw7'>
       <div class='f2'>${graph(thing)}</div>
       <div class='w3 ph3 self-end'>${now}</div>
       <div class='w4 ph3 self-end'>${location} ${attribute}</div>

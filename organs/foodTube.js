@@ -3,7 +3,7 @@ const extend = require('xtend')
 
 module.exports = FoodTube
 
-const RELEASE_RATE = 3
+const RELEASE_RATE = 20
 
 function FoodTube ({ initialState = { sugar: 0 } }) {
   assert(typeof initialState === 'object', 'FoodTube: must have an initial state (object)')

@@ -7,8 +7,9 @@ const PEPTIDE_DECAY_PROPORTION = 0.8
 
 module.exports = ({ monitor }) => Organ({
   name: 'liver',
-  reducer: ({ blood, state }) => {
+  reducer: ({ state, blood }) => {
     const { glucagon, insulin } = blood
+
     return {
       blood: extend(blood, {
         glucagon: glucagon * PEPTIDE_DECAY_PROPORTION,

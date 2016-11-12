@@ -1,13 +1,13 @@
 const extend = require('xtend')
 const Organ = require('./index')
 
-const RELEASE_RATE = 0.8
-const STORAGE_RATE = 0.5
+const RELEASE_RATE = 1
+const STORAGE_RATE = 1
 
 module.exports = ({ monitor } = {}) => Organ({
   name: 'adipose',
-  initialState: { sugar: 100 },
-  reducer: ({ blood, state }) => {
+  initialState: { sugar: 1000 },
+  reducer: ({ state, blood }) => {
     if (blood.glucagon === 0 || blood.glucagon === undefined) return { blood, state }
     if (state.sugar <= 0) return { blood, state }
 
