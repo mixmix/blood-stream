@@ -17,7 +17,7 @@ function Monitor ({ subscribe }) {
 
     for (var attr in state) {
       var attrState = getIn(newHistory, [location, attr], [])
-      attrState.unshift(state[attr])
+      attrState.push(state[attr])
 
       newHistory[location][attr] = attrState
     }

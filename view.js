@@ -1,12 +1,13 @@
 const html = require('yo-yo')
-const spark = require('sparkly')
+const spark = require('sparkline-canvas')
 const { createSelector: Getter, createStructuredSelector: Struct } = require('reselect')
 const getIn = require('get-in')
+const crypto = require('crypto')
 
 module.exports = view
 
 function view ({ history, mouth }) {
-  if (history === undefined || mouth === undefined) return html`<div>Loading...</div>`
+  if (history === undefined || mouth === undefined) return html`<div class='pa2'>Loading...</div>`
 
   const {
     bloodSugar,
@@ -42,22 +43,35 @@ function view ({ history, mouth }) {
 function graphDisplay (thing) {
   return html`
     <div class='pt3 pb4 ph3 flex'>
-      <div class='w4 pr2 self-end'>${thing.title}</div>
-      <div class='w3 self-end'>${thing.now}</div>
       <div class='f2'>${graph(thing.values)}</div>
+      <div class='w3 ph3 self-end'>${thing.now}</div>
+      <div class='w4 ph3 self-end'>${thing.title}</div>
     </div>
   `
 }
 
-const emptyState = ''
-const sampleLength = 40
+const sampleLength = 200
+const emptyState = 0
 
 function graph (values) {
   while (values.length < sampleLength) {
-    values.push(emptyState)
+    values.unshift(emptyState)
   }
 
-  return spark(values)
+  const graphOpts = {
+    width: 400,
+    height: 50,
+    id: customId(values)
+  }
+  return spark.draw(values, graphOpts)
+}
+
+function customId (values) {
+  const prefix = '_' + crypto.createHash('md5')
+    .update(values.join(''))
+    .digest('hex')
+    .slice(0, 10)
+  return prefix
 }
 
 const getViewState = Struct({
@@ -71,11 +85,15 @@ const getViewState = Struct({
 function getLocationAttribute (location, attribute) {
   return Getter(
     getRawLocation(location),
-    (data) => ({
-      title: `${location} ${attribute}`,
-      now: round(getIn(data, [attribute, 0], emptyState)),
-      values: getIn(data, [attribute], []).slice(0, sampleLength)
-    })
+    (data) => {
+      const values = getIn(data, [attribute], [])
+     
+      return {
+        title: `${location} ${attribute}`,
+        now: round(values[values.length -1] || 0),
+        values: values.slice(values.length - sampleLength)
+      }
+    }
   )
 }
 function getRawLocation (location) {
